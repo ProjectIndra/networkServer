@@ -23,3 +23,29 @@ def ip_for_interface(interface_name):
 
     # Return the IP address
     return ip_address
+
+def set_public_key_for_interface(interface_name: str, public_key: str) -> None:
+    """
+    Set the public key for a given interface name in Redis.
+    Args:
+        interface_name (str): The name of the interface.
+        public_key (str): The public key to set for the interface.
+    """
+    
+    # Set the public key for the given interface name
+    redis_client.set(keyspace.public_key(interface_name), public_key)
+
+def get_public_key_for_interface(interface_name: str) -> str:
+    """
+    Get the public key for a given interface name from Redis.
+    Args:
+        interface_name (str): The name of the interface.
+    """
+    
+    # Get the public key for the given interface name
+    public_key = redis_client.get(keyspace.public_key(interface_name))
+    
+    if public_key is None:
+        return None
+    
+    return public_key.decode("utf-8")

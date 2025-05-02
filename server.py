@@ -6,13 +6,16 @@ import sys
 from redisClient import test_redis_connection
 from wireguard import interface
 from wireguard import peer
-from controllers import peerController
+from controllers import addPeer, getPeerDetails, removePeer
 
 
 # main Flask app
 app = Flask(__name__)
 CORS(app)
 
+app.add_url_rule('/api/addPeer', view_func=addPeer.addPeerToWG, methods=['POST'])
+app.add_url_rule('/api/removePeer', view_func=removePeer.removePeerFromWG, methods=['POST'])
+app.add_url_rule('/api/getPeerDetails', view_func=getPeerDetails.getPeerDetails, methods=['POST'])
 
 
 if __name__ == '__main__':

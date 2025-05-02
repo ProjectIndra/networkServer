@@ -36,3 +36,23 @@ def write_interface_configuration(interface_name: str, config: str) -> None:
         print(f"Error writing configuration file: {e}")
         return
 
+def read_interface_configuration(interface_name: str) -> str:
+    """
+    Read the WireGuard interface configuration from a file.
+
+    Args:
+        interface_name (str): The name of the WireGuard interface.
+
+    Returns:
+        str: The WireGuard interface configuration.
+    """
+    
+    try:
+        # Read the configuration from a file
+        config_file_path = f"/etc/wireguard/{interface_name}.conf"
+        with open(config_file_path, "r") as config_file:
+            return config_file.read()
+    except IOError as e:
+        print(f"Error reading configuration file: {e}")
+        return False
+

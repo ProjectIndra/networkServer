@@ -21,12 +21,15 @@ def new_interface(interface_name: str) -> None:
     address = interfaceRequests.ip_for_interface(interface_name=interface_name)
     
     # generate the interface configuration
-    interface_configeration = configerations.generate_interface_configuration(private_key=private_key, address=address, listen_port=5000)
+    interface_configeration = configerations.generate_interface_configuration(private_key=private_key, address=address, listen_port=os.getenv("ENDPOINT").split(":")[1])
 
     # write the interface configuration to a file
     configerations.write_interface_configuration(interface_name=interface_name, config=interface_configeration)
 
     # bring the interface up with new configuration
     startStop.start_interface(interface_name=interface_name)
+
+    # save the interface public key to redis
+    interfaceRequests.set_public_key_for_interface(interface_name=interface_name, public_key=public_key)
 
     return private_key, public_key
