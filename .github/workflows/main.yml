@@ -1,0 +1,15 @@
+name: Run script for network server
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted 
+    steps:
+      - name: Run the netowrk server script
+        run: |
+          cd /home/avinash/scripts
+          sudo bash networkServerScript.sh
