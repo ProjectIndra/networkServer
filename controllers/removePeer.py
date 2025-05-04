@@ -29,7 +29,7 @@ def removePeerFromWG():
     )
      
     if result:
-        iptables.remove_peer_route(peer_ip=peer_details['ip_address'])
+        iptables.remove_peer_route(peer_ip=peer_details['peer_address'])
         return jsonify({"message": "Peer removed successfully"}), 200
     else:
         return jsonify({"error": "Failed to remove peer"}), 500
