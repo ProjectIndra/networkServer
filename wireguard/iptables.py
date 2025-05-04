@@ -11,11 +11,11 @@ def run_command(command):
 
 def remove_peer_route(peer_ip):
     # Remove the route for the peer's IP
-    run_command(f"ip route del {peer_ip}/32 dev wg0")
+    run_command(f"ip route del {peer_ip} dev wg0")
     print(f"Route for peer {peer_ip} removed from wg0.")
 
 # Function to add route for a peer
 def add_peer_route(peer_ip):
     # Add the route for the peer's IP
-    run_command(f"ip route add {peer_ip}/32 dev wg0")
+    run_command(f"ip route add {peer_ip} dev wg0")
     print(f"Route for peer {peer_ip} added to wg0.")
