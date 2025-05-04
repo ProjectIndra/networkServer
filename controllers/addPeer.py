@@ -25,7 +25,7 @@ def addPeerToWG():
             return jsonify(
                 {
                     "status": "error",
-                    "message": "Missing required parameters: interface_name, peer_name, public_key.",
+                    "error": "Missing required parameters: interface_name, peer_name, public_key.",
                 }
             ), 400
             
@@ -40,7 +40,7 @@ def addPeerToWG():
             return jsonify(
                 {
                     "status": "error",
-                    "message": f"Error adding peer {peer_name} to {interface_name}: {result['error']}",
+                    "error": f"Error adding peer {peer_name} to {interface_name}: {result['error']}",
                 }
             ), 500
 
@@ -48,7 +48,7 @@ def addPeerToWG():
         return jsonify(
             {
                 "status": "error",
-                "message": f"Error adding peer {peer_name} to {interface_name}: {e}",
+                "error": f"Error adding peer {peer_name} to {interface_name}: {e}",
             }
         ),500
 
@@ -93,6 +93,6 @@ def addPeerToWG():
         return jsonify(
             {
                 "status": "error",
-                "message": f"Error getting interface details: {e}",
+                "error": f"Error getting interface details: {e}",
             }
         ), 500
