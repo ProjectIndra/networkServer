@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from flask import jsonify, request
 
 from wireguard.peer import add_peer
+from wireguard.iptables import add_peer_route
 from dhcp import interfaceRequests
 from dhcp import peerRequests
 
@@ -43,6 +44,14 @@ def addPeerToWG():
                     "error": f"Error adding peer {peer_name} to {interface_name}: {result['error']}",
                 }
             ), 500
+
+        # Add the route for the peer
+        peer_ip = peerRequests.ip_for_peer(peer_name=peer_name)
+
+        if peer_ip:
+            add_peer_route(peer_ip=peer_ip)
+        else:
+            raise ValueError(f"Peer IP address not found for {peer_name}.")
 
     except Exception as e:
         return jsonify(

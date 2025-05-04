@@ -3,6 +3,7 @@ from flask import request, jsonify
 from dhcp import peerRequests
 from wireguard import configerations
 from wireguard import peer
+from wireguard import iptables
 
 def removePeerFromWG():
     """
@@ -26,7 +27,9 @@ def removePeerFromWG():
         peer_name=peer_name,
         public_key=peer_details['peer_public_key'],
     )
+     
     if result:
+        iptables.remove_peer_route(peer_ip=peer_details['ip_address'])
         return jsonify({"message": "Peer removed successfully"}), 200
     else:
         return jsonify({"error": "Failed to remove peer"}), 500
